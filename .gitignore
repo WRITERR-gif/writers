@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -137,3 +138,20 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+=======
+# dependencies
+node_modules/
+
+# environment variables
+.env
+
+# uploaded files
+public/uploads/
+
+# log files
+*.log
+
+# system files
+.DS_Store
+Thumbs.db
+>>>>>>> 0c7cd2c (add .gitignore to ignore env and uploads)
