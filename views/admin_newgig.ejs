@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Post New Gig</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 20px;
+    }
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, textarea, button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Post a New Gig</h2>
+  <form action="/admin/new-gig" method="post" enctype="multipart/form-data">
+    <label>Gig Title:</label>
+    <input name="title" required placeholder="e.g. Write 2000 word blog post">
+
+    <label>Gig Description:</label>
+    <textarea name="description" placeholder="Describe the gig here..."></textarea>
+
+    <label>Attach Picture or Document:</label>
+    <input type="file" name="file">
+
+    <button type="submit">Post Gig</button>
+  </form>
+</body>
+</html>

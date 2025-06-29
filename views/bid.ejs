@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Submit Bid</title>
+  <style>
+    body { font-family: sans-serif; background:#f4f4f4; margin:20px; }
+    form { max-width:600px; margin:auto; background:#fff; padding:20px; border-radius:5px; }
+    input, textarea { width:100%; margin-bottom:10px; padding:8px; }
+    button { background:#28a745; color:white; border:none; padding:10px; border-radius:4px; }
+    button:hover { background:#218838; }
+  </style>
+</head>
+<body>
+  <h2 style="text-align:center;">Submit Bid for <%= gig.title %></h2>
+  <form method="post" action="/submit-bid">
+    <input type="hidden" name="gigTitle" value="<%= gig.title %>">
+    <label>Your Name:</label>
+    <input name="name" required>
+    <label>Your WhatsApp Number:</label>
+    <input name="whatsapp" required>
+    <label>M-PESA Confirmation Message:</label>
+    <textarea name="mpesaMessage" required></textarea>
+    <label>Bid Message:</label>
+    <textarea name="bidMessage" required></textarea>
+    <button type="submit">Submit Bid</button>
+  </form>
+</body>
+</html>

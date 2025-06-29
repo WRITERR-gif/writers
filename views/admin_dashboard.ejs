@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+    }
+    header {
+      background: #343a40;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header img {
+      height: 40px;
+    }
+    main {
+      padding: 20px;
+    }
+    .gig-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px auto;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+    .gig-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .gig-actions form {
+      display: inline;
+    }
+    .gig-actions button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .gig-actions button:hover {
+      background: darkred;
+    }
+    a.button {
+      background: #28a745;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-left: 10px;
+    }
+    a.button:hover {
+      background: #218838;
+    }
+    .gig-description {
+      margin-top: 8px;
+      white-space: pre-line; /* allows line breaks in textarea content */
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <img src="https://via.placeholder.com/150x40?text=LOGO" alt="Logo" />
+    </div>
+    <nav>
+      <a href="/admin/new-gig" class="button">New Gig</a>
+      <a href="/admin/logout" class="button" style="background:#ffc107;color:black;">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h2>All Gigs</h2>
+    <% gigs.forEach(g => { %>
+      <div class="gig-card">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <% if (g.file && (g.file.endsWith('.jpg') || g.file.endsWith('.png'))) { %>
+            <img src="<%= g.file %>">
+          <% } else if (g.file) { %>
+            <a href="<%= g.file %>" target="_blank">View Document</a>
+          <% } else { %>
+            <img src="https://via.placeholder.com/100" alt="No File">
+          <% } %>
+          <div>
+            <strong><%= g.title %></strong>
+            <% if (g.description) { %>
+              <div class="gig-description"><%= g.description %></div>
+            <% } %>
+          </div>
+        </div>
+        <div class="gig-actions">
+          <form method="post" action="/admin/delete-gig/<%= g.id %>">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </main>
+</body>
+</html>
