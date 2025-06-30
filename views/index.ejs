@@ -107,14 +107,7 @@
           <div style="padding:10px;">
             <a href="<%= g.file %>" target="_blank">View Attached Document</a>
           </div>
-        <% } else { %>
-          <img src="https://via.placeholder.com/300x150?text=Writing+Gig" alt="Default">
-        <% } %>
-        <div class="content">
-          <h3><%= g.title %></h3>
-          <% if (g.description) { %>
-            <div class="description"><%= g.description %></div>
-          <% } %>
+      
         </div>
         <a href="/bid/<%= g.id %>">Place Bid</a>
       </div>
