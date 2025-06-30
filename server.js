@@ -28,7 +28,7 @@ const db = new sqlite3.Database('./writers.db', (err) => {
     }
 });
 
-// create gigs table if it does not exist
+// create gigs table if not exists
 db.run(`
     CREATE TABLE IF NOT EXISTS gigs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +45,7 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// configure multer
+// multer for uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, uploadsPath);
@@ -57,7 +57,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// middleware for admin routes
+// middleware to protect admin routes
 function checkAdminAuth(req, res, next) {
     if (req.session && req.session.adminLoggedIn) {
         next();
@@ -80,8 +80,7 @@ app.get("/", (req, res) => {
 
 // bid page
 app.get("/bid/:id", (req, res) => {
-    const id = req.params.id;
-    db.get(`SELECT * FROM gigs WHERE id = ?`, [id], (err, row) => {
+    db.get(`SELECT * FROM gigs WHERE id = ?`, [req.params.id], (err, row) => {
         if (err) {
             console.error(err.message);
             return res.status(500).send("Error fetching gig.");
@@ -96,9 +95,7 @@ app.get("/bid/:id", (req, res) => {
 // submit bid via WhatsApp
 app.post("/submit-bid", async (req, res) => {
     const { name, bidMessage, gigTitle, whatsapp, mpesaMessage } = req.body;
-
     const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH);
-
     try {
         await client.messages.create({
             from: process.env.TWILIO_NUMBER,
@@ -122,7 +119,6 @@ ${bidMessage}`
 app.get("/admin/login", (req, res) => {
     res.render("admin_login");
 });
-
 app.post("/admin/login", (req, res) => {
     const { username, password } = req.body;
     if (username === process.env.ADMIN_USER && password === "admin") {
@@ -145,11 +141,10 @@ app.get("/admin/dashboard", checkAdminAuth, (req, res) => {
     });
 });
 
-// post new gig
+// add new gig
 app.get("/admin/new-gig", checkAdminAuth, (req, res) => {
     res.render("admin_newgig");
 });
-
 app.post("/admin/new-gig", checkAdminAuth, upload.single('file'), (req, res) => {
     const { title, description } = req.body;
     let filePath = null;
@@ -171,8 +166,7 @@ app.post("/admin/new-gig", checkAdminAuth, upload.single('file'), (req, res) => 
 
 // delete gig
 app.post("/admin/delete-gig/:id", checkAdminAuth, (req, res) => {
-    const id = parseInt(req.params.id);
-    db.run(`DELETE FROM gigs WHERE id = ?`, [id], function (err) {
+    db.run(`DELETE FROM gigs WHERE id = ?`, [req.params.id], function (err) {
         if (err) {
             console.error(err.message);
         }
@@ -187,6 +181,6 @@ app.get("/admin/logout", (req, res) => {
     });
 });
 
-// start
+// port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

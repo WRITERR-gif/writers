@@ -65,7 +65,7 @@
     .gig-card .description {
       font-size: 0.9rem;
       color: #555;
-      white-space: pre-line; /* to allow multi-line text */
+      white-space: pre-line;
       margin-bottom: 10px;
     }
     .gig-card a {
@@ -80,6 +80,12 @@
     .gig-card a:hover {
       background: #218838;
     }
+    .no-gigs {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 30px;
+      color: #777;
+    }
     footer {
       text-align: center;
       padding: 20px;
@@ -92,33 +98,36 @@
 <body>
   <header>
     <img src="/images/logo.jpg" alt="Logo" style="height:50px;">
-
     <h1>Freelance Writer Gigs</h1>
   </header>
   <div class="hero">
     Find Your Next Writing Opportunity
   </div>
   <main class="gigs">
-    <% gigs.forEach(g => { %>
-      <div class="gig-card">
-        <% if (g.file && (g.file.endsWith('.jpg') || g.file.endsWith('.png') || g.file.endsWith('.jpeg'))) { %>
-          <img src="<%= g.file %>" alt="Gig Image">
-        <% } else if (g.file) { %>
-          <div style="padding:10px;">
-            <a href="<%= g.file %>" target="_blank">View Attached Document</a>
-          </div>
-        <% } else { %>
-          <img src="https://via.placeholder.com/300x150?text=Writing+Gig" alt="Default">
-        <% } %>
-        <div class="content">
-          <h3><%= g.title %></h3>
-          <% if (g.description) { %>
-            <div class="description"><%= g.description %></div>
+    <% if (gigs.length === 0) { %>
+      <div class="no-gigs">No gigs available at the moment. Check back soon!</div>
+    <% } else { %>
+      <% gigs.forEach(g => { %>
+        <div class="gig-card">
+          <% if (g.file && (g.file.endsWith('.jpg') || g.file.endsWith('.png') || g.file.endsWith('.jpeg'))) { %>
+            <img src="<%= g.file %>" alt="Gig Image">
+          <% } else if (g.file) { %>
+            <div style="padding:10px;">
+              <a href="<%= g.file %>" target="_blank">View Attached Document</a>
+            </div>
+          <% } else { %>
+            <img src="https://via.placeholder.com/300x150?text=Writing+Gig" alt="Default">
           <% } %>
+          <div class="content">
+            <h3><%= g.title %></h3>
+            <% if (g.description) { %>
+              <div class="description"><%= g.description %></div>
+            <% } %>
+          </div>
+          <a href="/bid/<%= g.id %>">Place Bid</a>
         </div>
-        <a href="/bid/<%= g.id %>">Place Bid</a>
-      </div>
-    <% }) %>
+      <% }) %>
+    <% } %>
   </main>
   <footer>
     &copy; 2025 WritersBid. All Rights Reserved.
