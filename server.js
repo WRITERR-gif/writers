@@ -37,11 +37,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// gigs store
-let gigs = [
-    { id: 1, title: "Write 1000 word article on AI", description: "Write a detailed AI article for a blog post.", file: null },
-    { id: 2, title: "Proofread 5 essays", description: "Check grammar, punctuation, and flow.", file: null },
-];
+// gigs store (start empty)
+let gigs = [];
 
 // middleware for admin routes
 function checkAdminAuth(req, res, next) {
